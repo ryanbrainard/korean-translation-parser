@@ -39,10 +39,10 @@ class ParserForm extends Component {
 
         <h3>Web</h3>
         <p><strong>{parsed.source}</strong></p>
-        <ul className="ParserForm-phrases">
+        <ul className="ParserForm-chunks">
         {
-          parsed.phrases &&
-          parsed.phrases.map((p) =>
+          parsed.chunks &&
+          parsed.chunks.map((p) =>
             <li title={p.translation}>
               {p.transcription}
               </li>

@@ -9,7 +9,7 @@ it('parses basic', () => {
 
   expect(KoreanParser.parse(input)).toEqual({
     source: "\"우와~ 이거 / 들리네!\",",
-    phrases: [
+    chunks: [
       {
         transcription: "우와",
         translation: "Wow",
@@ -36,7 +36,7 @@ it('handles hangul prefix', () => {
 
   expect(KoreanParser.parse(input)).toEqual({
     source: "TEST",
-    phrases: [
+    chunks: [
       {
         transcription: "~랑",
         translation: "with",

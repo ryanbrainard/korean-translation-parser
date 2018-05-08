@@ -29,17 +29,17 @@
   to { transform: rotate(360deg); }
 }
 
-.ParserForm-phrases {
+.ParserForm-chunks {
     list-style: none;
     padding-left: 0;
 }
 
-.ParserForm-phrases li {
+.ParserForm-chunks li {
     display: inline-block;
     list-style-type: none;
     cursor: pointer;
 }
 
-.ParserForm-phrases>li+li:before {
+.ParserForm-chunks>li+li:before {
     content: "\00a0/\00a0";
 }
