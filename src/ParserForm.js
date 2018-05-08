@@ -44,7 +44,7 @@ class ParserForm extends Component {
           parsed.chunks &&
           parsed.chunks.map((p) =>
             <li title={p.translation}>
-              {p.transcription}
+              {p.source}
               </li>
           )
         }

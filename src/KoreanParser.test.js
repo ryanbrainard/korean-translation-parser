@@ -11,15 +11,15 @@ it('parses basic', () => {
     source: "\"우와~ 이거 / 들리네!\",",
     chunks: [
       {
-        transcription: "우와",
+        source: "우와",
         translation: "Wow",
       },
       {
-        transcription: "이거",
+        source: "이거",
         translation: "this thing",
       },
       {
-        transcription: "들리다",
+        source: "들리다",
         translation: "to be heard (with foreign language, it can mean ‘to pick up on or understand through listening’)",
       },
     ],
@@ -38,7 +38,7 @@ it('handles hangul prefix', () => {
     source: "TEST",
     chunks: [
       {
-        transcription: "~랑",
+        source: "~랑",
         translation: "with",
       },
     ],

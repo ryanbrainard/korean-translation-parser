@@ -23,7 +23,7 @@ export class KoreanParser {
         throw `Could not match phrase: "${l}"`
       }
       return ({
-        transcription: p[1].trim(),
+        source: p[1].trim(),
         translation: p[2].trim()
       })
     })
