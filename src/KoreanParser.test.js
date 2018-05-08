@@ -1,6 +1,6 @@
 import {KoreanParser} from './KoreanParser'
 
-it('parses', () => {
+it('parses basic', () => {
   const input = `
     "우와~ 이거 / 들리네!",
     우와 Wow / 이거 this thing / 들리다 to be heard (with foreign language, it can mean ‘to pick up on or understand through listening’)
@@ -24,5 +24,24 @@ it('parses', () => {
       },
     ],
     translation: "“Wow! I can understand this!”"
+  });
+});
+
+it('handles hangul prefix', () => {
+  const input = `
+    TEST
+    ~랑 with
+    TEST
+  `
+
+  expect(KoreanParser.parse(input)).toEqual({
+    source: "TEST",
+    phrases: [
+      {
+        transcription: "~랑",
+        translation: "with",
+      },
+    ],
+    translation: "TEST"
   });
 });
