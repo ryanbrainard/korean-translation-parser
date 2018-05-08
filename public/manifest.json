@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Korean Translation Parser",
+  "name": "Korean Translation Parser",
   "icons": [
     {
       "src": "favicon.ico",
