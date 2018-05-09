@@ -27,7 +27,7 @@ class ParserForm extends Component {
       <div>
         <InputForm source={source} handleSourceChange={this.handleSourceChange} />
         <WebView parsed={parsed}/>
-        <RawView parsed={parsed}/>
+        {/*<RawView parsed={parsed}/>*/}
       </div>
     );
   }
@@ -39,7 +39,7 @@ const InputForm = ({source, handleSourceChange}) => {
       <h2>Input</h2>
       <form>
         <textarea
-          cols={100}
+          className="ParserForm-input"
           rows={10}
           value={source}
           onChange={handleSourceChange}
@@ -52,7 +52,7 @@ const InputForm = ({source, handleSourceChange}) => {
 const RawView = ({parsed}) => {
   return (
     <div>
-      <h3>Raw</h3>
+      <h2>Raw</h2>
       <pre>
           {JSON.stringify(parsed, null, '  ')}
         </pre>
@@ -63,15 +63,17 @@ const RawView = ({parsed}) => {
 const WebView = ({parsed}) => {
   return (
     <div>
-      <h3>Web</h3>
-      { parsed.map((hunk) => <Hunk hunk={hunk}/>) }
+      <h2>Web View</h2>
+      Hover over the chunks below to see the translation.
+      TODO: add a toggle to always show translations.
+      { parsed.map((hunk) => <Hunk hunk={hunk} />) }
     </div>
   )
 }
 
 const Hunk = ({hunk}) => {
   return (
-    <div>
+    <div className="ParserForm-hunk">
       <p><strong>{hunk.source}</strong></p>
       <ul className="ParserForm-chunks">
         {
@@ -85,7 +87,7 @@ const Hunk = ({hunk}) => {
 
 const Chunk = ({chunk}) => {
   return (
-    <li title={chunk.translation}>
+    <li className="ParserForm-chunk" title={chunk.translation}>
       {chunk.source}
     </li>
   )

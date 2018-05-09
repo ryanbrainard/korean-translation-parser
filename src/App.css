@@ -43,3 +43,23 @@
 .ParserForm-chunks>li+li:before {
     content: "\00a0/\00a0";
 }
+
+.ParserForm-input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+}
+
+.ParserForm-hunk {
+    border: 1px solid rgb(72,219,249);
+    border-radius: 5px;
+    margin-bottom: 1em;
+    padding: 0.75em;
+}
+
+.ParserForm-chunk:hover {
+    /*color: red;*/
+    background-color: rgb(72,219,249);
+}
