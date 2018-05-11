@@ -8,87 +8,103 @@ class ParserForm extends Component {
     super(props)
     this.state = {
       source: '',
-      parsed: [],
+      showHunkTranslation: true,
+      showChunkTranslation: false,
     }
-    this.handleSourceChange = this.handleSourceChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  handleSourceChange(event) {
-    const source = event.target.value
-    const parsed = HunkParser.parse(source).map((h) => KoreanParser.parse(h))
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-    this.setState({ source, parsed });
+    this.setState({
+      [name]: value
+    });
   }
 
   render() {
-    const { source, parsed } = this.state
+    const { source, showHunkTranslation, showChunkTranslation } = this.state
+
+    const parsed = HunkParser.parse(source).map((h) => KoreanParser.parse(h))
 
     return (
       <div>
-        <InputForm source={source} handleSourceChange={this.handleSourceChange} />
-        <WebView parsed={parsed}/>
-        {/*<RawView parsed={parsed}/>*/}
+        <div>
+          <h2>Input</h2>
+          <textarea
+            name="source"
+            className="ParserForm-input"
+            rows={10}
+            value={source}
+            onChange={this.handleInputChange}
+          />
+        </div>
+
+        <div>
+          <h2>Options</h2>
+          <label>
+            <input
+              name="showChunkTranslation"
+              type="checkbox"
+              checked={this.state.showChunkTranslation}
+              onChange={this.handleInputChange} />
+            Show Chunked Translations
+          </label>
+          &nbsp;
+          <label>
+            <input
+              name="showHunkTranslation"
+              type="checkbox"
+              checked={this.state.showHunkTranslation}
+              onChange={this.handleInputChange} />
+            Show Line Translations
+          </label>
+        </div>
+
+        <div>
+          <h2>Output</h2>
+          Hover over the chunks below to see the translation.
+          {
+            parsed.map((hunk) =>
+              <Hunk
+                hunk={hunk}
+                showHunkTranslation={showHunkTranslation}
+                showChunkTranslation={showChunkTranslation}
+              />
+            )
+          }
+        </div>
       </div>
     );
   }
 }
 
-const InputForm = ({source, handleSourceChange}) => {
-  return (
-    <div>
-      <h2>Input</h2>
-      <form>
-        <textarea
-          className="ParserForm-input"
-          rows={10}
-          value={source}
-          onChange={handleSourceChange}
-        />
-      </form>
-    </div>
-  )
-}
-
-const RawView = ({parsed}) => {
-  return (
-    <div>
-      <h2>Raw</h2>
-      <pre>
-          {JSON.stringify(parsed, null, '  ')}
-        </pre>
-    </div>
-  )
-}
-
-const WebView = ({parsed}) => {
-  return (
-    <div>
-      <h2>Web View</h2>
-      Hover over the chunks below to see the translation.
-      TODO: add a toggle to always show translations.
-      { parsed.map((hunk) => <Hunk hunk={hunk} />) }
-    </div>
-  )
-}
-
-const Hunk = ({hunk}) => {
+const Hunk = ({hunk, showHunkTranslation, showChunkTranslation}) => {
   return (
     <div className="ParserForm-hunk">
       <p><strong>{hunk.source}</strong></p>
       <ul className="ParserForm-chunks">
         {
-          hunk.chunks && hunk.chunks.map((chunk) => <Chunk chunk={chunk}/>)
+          hunk.chunks && hunk.chunks.map((chunk) =>
+            <Chunk
+              chunk={chunk}
+              showChunkTranslation={showChunkTranslation}
+            />
+          )
         }
       </ul>
-      <p><em>{hunk.translation}</em></p>
+      <p><em>{showHunkTranslation && hunk.translation}</em></p>
     </div>
   )
 }
 
-const Chunk = ({chunk}) => {
+const Chunk = ({chunk, showChunkTranslation}) => {
   return (
     <li className="ParserForm-chunk" title={chunk.translation}>
       {chunk.source}
+      {showChunkTranslation && ' ' + chunk.translation}
     </li>
   )
 }
