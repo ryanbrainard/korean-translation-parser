@@ -24,10 +24,20 @@ class ParserForm extends Component {
     });
   }
 
+  tryParse(source) {
+    try {
+      return HunkParser.parse(source).map((h) => KoreanParser.parse(h))
+    } catch (e) {
+      return [{
+        source: `ERROR: ${e.message}`,
+      }]
+    }
+  }
+
   render() {
     const { source, showHunkTranslation, showChunkTranslation } = this.state
 
-    const parsed = HunkParser.parse(source).map((h) => KoreanParser.parse(h))
+    const parsed = this.tryParse(source)
 
     return (
       <div>
@@ -69,6 +79,7 @@ class ParserForm extends Component {
           {
             parsed.map((hunk) =>
               <Hunk
+                key={hunk.source}
                 hunk={hunk}
                 showHunkTranslation={showHunkTranslation}
                 showChunkTranslation={showChunkTranslation}
