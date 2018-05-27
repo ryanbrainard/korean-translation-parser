@@ -18,7 +18,7 @@ export class KoreanParser {
     }
 
     parsed.chunks = lines[1].split(/ +\/ +/).map((l) => {
-      const p = l.match(/(.+?[\u3131-\uD79D]*)(.*)/)
+      const p = l.match(/(.+?[\u3131-\uD79D ]*)(.*)/)
       if (!p) {
         throw `Could not match phrase: "${l}"`
       }
